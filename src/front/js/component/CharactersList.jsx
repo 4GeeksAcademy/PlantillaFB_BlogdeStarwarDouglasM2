@@ -19,7 +19,7 @@ const CharactersList = () => {
     }, []);
 
     return (
-        <div>
+        <div className='backgCaracterList'>
             <h1>Star Wars Characters</h1>
             <div>
                 <div className='d-flex'>

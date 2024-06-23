@@ -2,9 +2,9 @@ import React from "react";
 
 export const PlanetCard = ({ planet }) => {
     return (
-        <div className="card col-4 ms-2 text-start" style={{ width: "18rem" }}>
+        <div className="card col-4 ms-2 text-start backgCard" style={{ width: "18rem" }}>
             <div style={{ height: "300px", overflow: "hidden" }}>
-                <img src={"https://pm1.aminoapps.com/6361/c338000011dddc976bc1e960bf83c6a04402b720_hq.jpg"} className="card-img-top" alt={planet.name} style={{ height: "100%", width: "100%", objectFit: "contain" }} />
+                <img src={planet.image} className="card-img-top" alt={planet.name} style={{ height: "100%", width: "100%", objectFit: "contain" }} />
             </div>
             <div className="card-body">
                 <h5 className="card-title mb-3">{planet.name}</h5>
