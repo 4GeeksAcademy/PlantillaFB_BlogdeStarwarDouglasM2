@@ -11,9 +11,9 @@ export const CharacterCard = ({ character }) => {
     return (
         <div className="card col-4 ms-2 text-start backgCard" style={{ width: "18rem" }}>
             <div style={{ height: "300px", overflow: "hidden" }}>
-                <img src={character.image} className="card-img-top" alt={character.name} style={{ height: "100%", width: "100%", objectFit: "contain" }} />
+                <img src={character.image} className="card-img-top zoom" alt={character.name} style={{ height: "100%", width: "100%", objectFit: "contain" }} />
             </div>
-            <div className="card-body">
+            <div className="card-body sombra">
                 <h5 className="card-title mb-3">{character.name}</h5>
                 <p className="m-0"><strong>Gender:</strong> {character.gender}</p>
                 <p className="m-0"><strong>Hair Color:</strong> {character.hairColor}</p>

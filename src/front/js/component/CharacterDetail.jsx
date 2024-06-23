@@ -9,7 +9,7 @@ export const CharacterDetail = () => {
         <div>
             <div className="d-flex character-info backgColorCaracDetail pb-5">
                 <div className="imgCaracterDetail">
-                    <img src={character.image} alt={character.name} />
+                    <img src={character.image} alt={character.name} className="sombra" />
                 </div>
                 <div>
                 <h1>{character.name}</h1>

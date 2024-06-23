@@ -1,113 +1,149 @@
 .card {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-.backgroundColorNavBar{
-    background-color: #000000;
+.backgroundColorNavBar {
+  background-color: #000000;
 }
 
 .imgCaracterDetail {
-    width: 800px;
-    height: 600px;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .imgCaracterDetail img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
 }
 
 .character-info a {
-    color: #fdf900; /* Cambia el color del enlace */
-    text-decoration: underline; /* Subraya el enlace */
-  }
-  
-  .character-info a:hover {
-    color: #030303; /* Cambia el color del enlace cuando se pasa el cursor por encima */
-    text-decoration: none; /* Remueve la subrayado cuando se pasa el cursor por encima */
-  }
+  color: #fdf900;
+  /* Cambia el color del enlace */
+  text-decoration: underline;
+  /* Subraya el enlace */
+}
 
-  .backgColorCaracDetail{
-    background-color: grey;
-  }
-  .backgColorFooter{
-    background-color: black;
-  }
-  .character-info {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .character-info > div {
-    flex: 1 1 30%;
-    padding: 10px;
-  }
-  
-  .character-info ul {
-    padding-left: 20px; 
-  }
-  
-  .character-info li {
-    margin-bottom: 5px;
-  }
-  
-  .custom-list {
-    list-style-type: none;
-    padding-left: 20px; 
-  }
-  
-  .custom-list li {
-    position: relative;
-    padding-left: 20px; 
-    color: black; 
-  }
-  
-  .custom-list li::before {
-    content: '•'; 
-    position: absolute; 
-    left: 0; 
-    color: rgb(255, 238, 0);
-    font-size: 1.2em; 
-  }
+.character-info a:hover {
+  color: #030303;
+  /* Cambia el color del enlace cuando se pasa el cursor por encima */
+  text-decoration: none;
+  /* Remueve la subrayado cuando se pasa el cursor por encima */
+}
 
-  .textFooter{
-    color:gainsboro;
-  }
-
-  .linkFooter a{
-    color: #fdf900;
-    text-decoration: underline;
-  } 
-  .linkFooter a:hover{
-    color: #b4b4b4;
-    text-decoration: underline;
-  } 
-
-  .textCharacterDetail{
-    text-align: center;
-  }
-  .textCharacterDetailProperty{
-    color: yellow;
-  }
-
-  @font-face {
-    font-family: 'Starjedi';
-    src: url('./fonts/Starjedi.ttf') format('truetype');
-  }
-  @font-face {
-    font-family: 'Starjout';
-    src: url("./fonts/Starjout.ttf") format('truetype');
-  }
-.backgCaracterList{
+.backgColorCaracDetail {
   background-color: grey;
 }
-.backgHome{
+
+.backgColorFooter {
+  background-color: black;
+}
+
+.character-info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.character-info>div {
+  flex: 1 1 30%;
+  padding: 10px;
+}
+
+.character-info ul {
+  padding-left: 20px;
+}
+
+.character-info li {
+  margin-bottom: 5px;
+}
+
+.custom-list {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.custom-list li {
+  position: relative;
+  padding-left: 20px;
+  color: black;
+}
+
+.custom-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: rgb(255, 238, 0);
+  font-size: 1.2em;
+}
+
+.textFooter {
+  color: gainsboro;
+}
+
+.linkFooter a {
+  color: #fdf900;
+  text-decoration: underline;
+}
+
+.linkFooter a:hover {
+  color: #b4b4b4;
+  text-decoration: underline;
+}
+
+.textCharacterDetail {
+  text-align: center;
+}
+
+.textCharacterDetailProperty {
+  color: yellow;
+}
+
+@font-face {
+  font-family: 'Starjedi';
+  src: url('./fonts/Starjedi.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Starjout';
+  src: url("./fonts/Starjout.ttf") format('truetype');
+}
+
+.backgCaracterList {
   background-color: grey;
 }
-.backgCard{
+
+.backgHome {
+  background-color: grey;
+}
+
+.backgCard {
   background-color: gainsboro;
+}
+
+.zoom {
+  transition: transform 0.3s;
+  width: 300px;
+  height: auto;
+}
+
+.zoom:hover {
+  transform: scale(1.5);
+}
+
+.sombra {
+  box-shadow: 10px 15px 20px rgba(251, 255, 5, 0.5);
+}
+
+.namePlanetDetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: #fdf900;
+  font-size: 100px;
+
 }
