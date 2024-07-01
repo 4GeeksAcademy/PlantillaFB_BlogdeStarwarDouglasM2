@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
 import "../../styles/home.css";
 import CharactersList from "../component/CharactersList.jsx";
-import PlanetsList from "../component/PlanetsList.jsx";
+import { PlanetsList } from "../component/PlanetsList.jsx"; // Note the curly braces
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
-
 	return (
 		<div className="container-fluid w-100 text-center m-0 mt-5 backgHome">
 			<div className="overflow-auto w-100">
@@ -14,11 +11,9 @@ export const Home = () => {
 					<CharactersList />
 				</div>
 			</div>
-			<div className="overflow-auto">
+			<div className="overflow-auto w-100">
 				<div className="m-3">
-					<div>
-						<PlanetsList />
-					</div>
+					<PlanetsList />
 				</div>
 			</div>
 		</div>

@@ -1,46 +1,94 @@
 import React, { useState, useEffect } from "react";
-import getState from "./flux.js";
 
-// Don't change, here is where we initialize our context, by default it's just going to be null.
-export const Context = React.createContext(null);
-
-// This function injects the global store to any view/component where you want to use it, we will inject the context to layout.js, you can see it here:
-// https://github.com/4GeeksAcademy/react-hello-webapp/blob/master/src/js/layout.js#L35
-const injectContext = PassedComponent => {
-	const StoreWrapper = props => {
-		//this will be passed as the contenxt value
-		const [state, setState] = useState(
-			getState({
-				getStore: () => state.store,
-				getActions: () => state.actions,
-				setStore: updatedStore =>
-					setState({
-						store: Object.assign(state.store, updatedStore),
-						actions: { ...state.actions }
-					})
-			})
-		);
-
-		useEffect(() => {
-			/**
-			 * EDIT THIS!
-			 * This function is the equivalent to "window.onLoad", it only runs once on the entire application lifetime
-			 * you should do your ajax requests or fetch api requests here. Do not use setState() to save data in the
-			 * store, instead use actions, like this:
-			 **/
-			state.actions.getMessage(); // <---- calling this function from the flux.js actions
-		}, []);
-
-		// The initial value for the context is not null anymore, but the current state of this component,
-		// the context will now have a getStore, getActions and setStore functions available, because they were declared
-		// on the state of this component
-		return (
-			<Context.Provider value={state}>
-				<PassedComponent {...props} />
-			</Context.Provider>
-		);
-	};
-	return StoreWrapper;
+const initialStore = {
+    store: {
+        planets: [], // Inicialmente vacío, se llenará con la carga inicial de planetas
+        favorites: [] // Arreglo de favoritos inicialmente vacío
+    },
+    actions: {
+        addFavorite: () => {}, // Función para agregar favoritos
+        removeFavorite: () => {}, // Función para eliminar favoritos
+        getMessage: () => {} // Función opcional para obtener mensajes
+    }
 };
 
-export default injectContext;
+export const Context = React.createContext(initialStore);
+
+export const ContextProvider = ({ children }) => {
+    const [state, setState] = useState(initialStore);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('https://www.swapi.tech/api/planets/');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+
+                const planetsDetails = await Promise.all(data.results.map(async (planet) => {
+                    const res = await fetch(`https://www.swapi.tech/api/planets/${planet.uid}`);
+                    if (!res.ok) {
+                        throw new Error('Failed to fetch planet details');
+                    }
+                    const planetData = await res.json();
+                    const planetProps = planetData.result.properties;
+                    planetProps.image = planetImages[planetProps.name] || 'https://example.com/default.jpg';
+                    return planetProps;
+                }));
+
+                setState({
+                    ...state,
+                    store: {
+                        ...state.store,
+                        planets: planetsDetails
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const actions = {
+        addFavorite: (planet) => {
+            const updatedFavorites = [...state.store.favorites, planet];
+            setState({
+                ...state,
+                store: {
+                    ...state.store,
+                    favorites: updatedFavorites
+                }
+            });
+        },
+        removeFavorite: (planetToRemove) => {
+            setState(prevState => {
+                const updatedFavorites = prevState.store.favorites.filter(planet => planet.uid !== planetToRemove.uid);
+                
+                return {
+                    ...prevState,
+                    store: {
+                        ...prevState.store,
+                        favorites: updatedFavorites
+                    }
+                };
+            });
+        },
+        
+        
+        getMessage: () => {
+            // Esta función puede implementarse si se necesita obtener mensajes
+        }
+    };
+    
+    
+    
+
+    return (
+        <Context.Provider value={{ state, actions }}>
+            {children}
+        </Context.Provider>
+    );
+};

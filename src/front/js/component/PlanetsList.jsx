@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { PlanetCard } from '../component/PlanetCard.jsx';
+import { PlanetCard } from './PlanetCard.jsx';
 
-const PlanetsList = () => {
+export const PlanetsList = () => {
     const [planets, setPlanets] = useState([]);
 
     const planetImages = {
@@ -20,10 +20,16 @@ const PlanetsList = () => {
     const loadPlanets = async () => {
         try {
             const response = await fetch('https://www.swapi.tech/api/planets/');
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
             const data = await response.json();
 
-            const planetsDetails = await Promise.all(data.results.map(async planet => {
+            const planetsDetails = await Promise.all(data.results.map(async (planet) => {
                 const res = await fetch(`https://www.swapi.tech/api/planets/${planet.uid}`);
+                if (!res.ok) {
+                    throw new Error('Failed to fetch planet details');
+                }
                 const planetData = await res.json();
                 const planetProps = planetData.result.properties;
                 planetProps.image = planetImages[planetProps.name] || 'https://example.com/default.jpg';
@@ -32,7 +38,7 @@ const PlanetsList = () => {
 
             setPlanets(planetsDetails);
         } catch (error) {
-            console.error('Error fetching planets:', error);
+            console.error('Error fetching data:', error);
         }
     };
 
@@ -45,13 +51,11 @@ const PlanetsList = () => {
             <h1>Star Wars Planets</h1>
             <div className='row'>
                 <div className='d-flex scroll-container'>
-                    {planets.map(planet => (
-                        <PlanetCard key={planet.uid} planet={planet} />
+                    {planets.map((planet, index) => (
+                        <PlanetCard key={`${planet.uid}-${index}`} planet={planet} />
                     ))}
                 </div>
             </div>
         </div>
     );
 };
-
-export default PlanetsList;
