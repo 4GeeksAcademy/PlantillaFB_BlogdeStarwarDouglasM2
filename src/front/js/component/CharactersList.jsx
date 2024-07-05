@@ -20,7 +20,7 @@ const CharactersList = () => {
 
     return (
         <div className='backgCaracterList'>
-            <h1>Star Wars Characters</h1>
+            <h1 className='star-wars-title'>Star Wars Characters</h1>
             <div>
                 <div className='d-flex'>
                     {characters.map(character => (

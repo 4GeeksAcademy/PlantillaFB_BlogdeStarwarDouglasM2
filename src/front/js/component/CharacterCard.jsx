@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '/workspaces/PlantillaFB_BlogdeStarwarDouglasM2/src/front/js/store/appContext.js';
 import { useNavigate } from 'react-router-dom';
 
 export const CharacterCard = ({ character }) => {
+    const { actions } = useContext(Context);
     const navigate = useNavigate();
 
+    const handleAddFavorite = () => {
+        actions.addFavorite(character);
+    };
     const handleLearnMore = () => {
         navigate(`/character/${character.id}`, { state: { character } });
     };
@@ -20,7 +25,7 @@ export const CharacterCard = ({ character }) => {
                 <p className="m-0"><strong>Eye Color:</strong> {character.eyeColor}</p>
                 <div>
                     <button type="button" className="btn btn-outline-primary me-5 mt-4" onClick={handleLearnMore}> Learn More! </button>
-                    <button type="button" className="btn btn-outline-warning ms-5 mt-4"><i className="fa-regular fa-heart"></i></button>
+                    <button type="button" className="btn btn-outline-warning ms-5 mt-4" onClick={handleAddFavorite}><i className="fa-regular fa-heart"></i></button>
                 </div>
             </div>
         </div>

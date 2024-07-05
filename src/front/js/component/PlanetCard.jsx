@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Context } from '/workspaces/PlantillaFB_BlogdeStarwarDouglasM2/src/front/js/store/appContext.js'; // Ajusta la ruta según sea necesario
+import { Context } from '/workspaces/PlantillaFB_BlogdeStarwarDouglasM2/src/front/js/store/appContext.js'; 
 
 export const PlanetCard = ({ planet }) => {
     const navigate = useNavigate();
-    const { state, actions } = useContext(Context); // Asegúrate de que Context esté correctamente importado y utilizado
+    const { state, actions } = useContext(Context); 
 
     const handleLearnMore = () => {
         navigate(`/planet/${planet.uid}`, { state: { planet } });
     };
 
     const handleAddFavorite = () => {
-        actions.addFavorite(planet); // Asegúrate de que actions.addFavorite esté disponible y funcione correctamente
+        actions.addFavorite(planet); 
     };
 
 
@@ -38,7 +38,7 @@ export const PlanetCard = ({ planet }) => {
                 </p>
                 <div>
                     <button type="button" className="btn btn-outline-primary me-3 mt-4" onClick={handleLearnMore}>Learn More!</button>
-                    <button type="button" className="btn btn-outline-warning mt-4" onClick={handleAddFavorite}>
+                    <button type="button" className="btn btn-outline-warning ms-5 mt-4" onClick={handleAddFavorite}>
                         <i className="far fa-heart"></i>
                     </button>
                 </div>

@@ -48,7 +48,7 @@ export const PlanetsList = () => {
 
     return (
         <div>
-            <h1>Star Wars Planets</h1>
+            <h1 className='star-wars-title mt-5'>Star Wars Planets</h1>
             <div className='row'>
                 <div className='d-flex scroll-container'>
                     {planets.map((planet, index) => (

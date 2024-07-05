@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 
 const initialStore = {
     store: {
-        planets: [], // Inicialmente vacío, se llenará con la carga inicial de planetas
-        favorites: [] // Arreglo de favoritos inicialmente vacío
+        planets: [],     
+        characters: [],   
+        favorites: []     
     },
     actions: {
-        addFavorite: () => {}, // Función para agregar favoritos
-        removeFavorite: () => {}, // Función para eliminar favoritos
-        getMessage: () => {} // Función opcional para obtener mensajes
+        addFavorite: () => {},    
+        removeFavorite: () => {}, 
+        getMessage: () => {}     
     }
 };
 
@@ -18,71 +19,74 @@ export const ContextProvider = ({ children }) => {
     const [state, setState] = useState(initialStore);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://www.swapi.tech/api/planets/');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
+        const fetchPlanets = async () => {
+            const planetsResponse = await fetch('https://www.swapi.tech/api/planets/');
+            const planetsData = await planetsResponse.json();
+            const planets = planetsData.results;
 
-                const planetsDetails = await Promise.all(data.results.map(async (planet) => {
-                    const res = await fetch(`https://www.swapi.tech/api/planets/${planet.uid}`);
-                    if (!res.ok) {
-                        throw new Error('Failed to fetch planet details');
-                    }
-                    const planetData = await res.json();
-                    const planetProps = planetData.result.properties;
-                    planetProps.image = planetImages[planetProps.name] || 'https://example.com/default.jpg';
-                    return planetProps;
-                }));
+            const finalPlanetsList = [];
 
-                setState({
-                    ...state,
-                    store: {
-                        ...state.store,
-                        planets: planetsDetails
-                    }
-                });
-            } catch (error) {
-                console.error('Error fetching data:', error);
+            for (let planet of planets) {
+                const res = await fetch(`https://www.swapi.tech/api/planets/${planet.uid}`);
+                const { result } = await res.json();
+                const fullPlanet = {
+                    ...planet,
+                    properties: result.properties
+                };
+                finalPlanetsList.push(fullPlanet);
             }
+
+            setState(prevState => ({
+                ...prevState,
+                store: {
+                    ...prevState.store,
+                    planets: finalPlanetsList
+                }
+            }));
         };
 
-        fetchData();
+        const fetchCharacters = async () => {
+            const charactersResponse = await fetch('https://akabab.github.io/starwars-api/api/all.json');
+            const charactersData = await charactersResponse.json();
+            const characters = charactersData.results;
+
+            setState(prevState => ({
+                ...prevState,
+                store: {
+                    ...prevState.store,
+                    characters: characters
+                }
+            }));
+        };
+
+        fetchPlanets();
+        fetchCharacters();
     }, []);
 
     const actions = {
-        addFavorite: (planet) => {
-            const updatedFavorites = [...state.store.favorites, planet];
-            setState({
-                ...state,
+        addFavorite: (item) => {
+            const updatedFavorites = [...state.store.favorites, item];
+            setState(prevState => ({
+                ...prevState,
                 store: {
-                    ...state.store,
+                    ...prevState.store,
                     favorites: updatedFavorites
                 }
-            });
+            }));
         },
-        removeFavorite: (planetToRemove) => {
-            setState(prevState => {
-                const updatedFavorites = prevState.store.favorites.filter(planet => planet.uid !== planetToRemove.uid);
-                
-                return {
-                    ...prevState,
-                    store: {
-                        ...prevState.store,
-                        favorites: updatedFavorites
-                    }
-                };
-            });
+        removeFavorite: (itemToRemove) => {
+            setState(prevState => ({
+                ...prevState,
+                store: {
+                    ...prevState.store,
+                    favorites: prevState.store.favorites.filter(fav => fav.name !== itemToRemove.name)
+                }
+            }));
         },
-        
-        
         getMessage: () => {
-            // Esta función puede implementarse si se necesita obtener mensajes
+           
         }
     };
-    
     
     
 

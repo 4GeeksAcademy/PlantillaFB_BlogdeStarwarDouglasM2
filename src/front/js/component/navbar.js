@@ -6,8 +6,8 @@ export const Navbar = () => {
     const { state, actions } = useContext(Context);
     const { store } = state;
 
-    const handleRemoveFavorite = (planet) => {
-        actions.removeFavorite(planet); // Llama a la función removeFavorite del contexto con el planeta específico
+    const handleRemoveFavorite = (item) => {
+        actions.removeFavorite(item); 
     };
 
     return (
@@ -19,16 +19,16 @@ export const Navbar = () => {
                 <div className="ml-auto">
                     <div className="dropdown">
                         <button className="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            Favoritos
+                            Favoritos <span className="badge bg-secondary">{store.favorites.length}</span>
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             {store && store.favorites && store.favorites.length === 0 ? (
                                 <li className="text-center text-muted">No hay favoritos</li>
                             ) : (
-                                store.favorites.map((planet) => (
-                                    <li key={planet.uid} className="dropdown-item d-flex justify-content-between align-items-center">
-                                        {planet.name}
-                                        <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => handleRemoveFavorite(planet)}>Remove</button>
+                                store.favorites.map((item) => (
+                                    <li key={item.uid} className="dropdown-item d-flex justify-content-between align-items-center">
+                                        <span>{item.name}</span>
+                                        <button type="button" className="btn btn-sm btn-danger ms-2" onClick={() => handleRemoveFavorite(item)}>Remove</button>
                                     </li>
                                 ))
                             )}
